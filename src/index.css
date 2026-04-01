@@ -784,20 +784,20 @@ body { margin: 0; }
 }
 .sparkle-particle {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--color);
-  animation: sparkle-burst 500ms ease-out forwards;
+  animation: sparkle-burst 700ms ease-out forwards;
   animation-delay: var(--delay);
   opacity: 0;
 }
 @keyframes sparkle-burst {
   0% {
-    transform: translate(0, 0) scale(0.5);
+    transform: translate(0, 0) scale(0.6);
     opacity: 1;
   }
-  50% {
+  40% {
     opacity: 1;
   }
   100% {
