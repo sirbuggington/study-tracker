@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { TaskItem } from '../data/types';
 import { SparklesBurst } from './SparklesBurst';
+import { triggerHaptic } from '../utils/haptic';
 
 interface Props {
   task: TaskItem;
@@ -25,6 +26,7 @@ export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
     if (!checked) {
       setShowSparkles(true);
       setTimeout(() => setShowSparkles(false), 600);
+      triggerHaptic();
     }
     onToggle(task.id);
   };
