@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import type { ProgressState } from '../data/types';
 
 const STORAGE_KEY = 'hamilton-study-tracker-progress';
@@ -13,15 +13,15 @@ function loadProgress(): ProgressState {
 }
 
 function saveProgress(state: ProgressState) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // localStorage may be unavailable (private browsing, storage full)
+  }
 }
 
 export function useProgress() {
   const [progress, setProgress] = useState<ProgressState>(loadProgress);
-
-  useEffect(() => {
-    saveProgress(progress);
-  }, [progress]);
 
   const toggle = useCallback((taskId: string) => {
     setProgress(prev => {
@@ -31,6 +31,7 @@ export function useProgress() {
       } else {
         next[taskId] = true;
       }
+      saveProgress(next);
       return next;
     });
   }, []);
@@ -40,7 +41,9 @@ export function useProgress() {
   }, [progress]);
 
   const resetAll = useCallback(() => {
-    setProgress({});
+    const empty = {};
+    saveProgress(empty);
+    setProgress(empty);
   }, []);
 
   const exportData = useCallback(() => {
@@ -51,6 +54,7 @@ export function useProgress() {
     try {
       const parsed = JSON.parse(json);
       if (typeof parsed === 'object' && parsed !== null) {
+        saveProgress(parsed);
         setProgress(parsed);
         return true;
       }
