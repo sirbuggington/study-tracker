@@ -30,7 +30,7 @@ export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
   };
 
   return (
-    <div className={`task-wrapper ${checked ? 'task-done' : ''} task-${type}`}>
+    <div className={`task-wrapper ${checked ? 'task-done' : ''} task-${type} ${task.isQuiz ? 'task-quiz' : ''}`}>
       {showSparkles && <SparklesBurst />}
       <label className="task-item">
         <input

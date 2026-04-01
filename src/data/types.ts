@@ -5,6 +5,7 @@ export interface TaskItem {
   link?: string;
   hours: number;
   detail?: string;
+  isQuiz?: boolean;
 }
 
 export interface DayData {

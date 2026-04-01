@@ -404,6 +404,8 @@ body { margin: 0; }
 }
 .task-must .task-check { border-color: var(--blue); }
 .task-nice .task-check { border-color: var(--purple); }
+.task-quiz .task-check { border-color: var(--orange); }
+.task-quiz .task-hours { background: var(--orange-light); color: var(--orange); }
 .task-done .task-check {
   background: var(--green);
   border-color: var(--green);
