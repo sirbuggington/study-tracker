@@ -43,9 +43,12 @@ async function saveRemote(state: ProgressState) {
   }
 }
 
+let _saveTimer: ReturnType<typeof setTimeout> | null = null;
+
 function save(state: ProgressState) {
   saveLocal(state);
-  saveRemote(state);
+  if (_saveTimer) clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => saveRemote(state), 2000);
 }
 
 export function useProgress() {
