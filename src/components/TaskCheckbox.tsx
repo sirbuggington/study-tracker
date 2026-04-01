@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { TaskItem } from '../data/types';
+import { SparklesBurst } from './SparklesBurst';
 
 interface Props {
   task: TaskItem;
@@ -18,14 +19,24 @@ function formatHours(h: number): string {
 
 export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
   const [showDetail, setShowDetail] = useState(false);
+  const [showSparkles, setShowSparkles] = useState(false);
+
+  const handleToggle = () => {
+    if (!checked) {
+      setShowSparkles(true);
+      setTimeout(() => setShowSparkles(false), 600);
+    }
+    onToggle(task.id);
+  };
 
   return (
     <div className={`task-wrapper ${checked ? 'task-done' : ''} task-${type}`}>
+      {showSparkles && <SparklesBurst />}
       <label className="task-item">
         <input
           type="checkbox"
           checked={checked}
-          onChange={() => onToggle(task.id)}
+          onChange={handleToggle}
         />
         <span className="task-check" />
         <span className="task-text">

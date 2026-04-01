@@ -445,7 +445,7 @@ body { margin: 0; }
   align-self: center;
 }
 .task-done .task-hours { opacity: 0.4; }
-.task-wrapper { border-radius: 8px; }
+.task-wrapper { border-radius: 8px; position: relative; }
 .task-detail-btn {
   font-size: 11px;
   font-weight: 600;
@@ -771,5 +771,110 @@ body { margin: 0; }
   }
   .main-content {
     padding: 24px 32px;
+  }
+}
+
+/* Sparkle Burst (mini celebration) */
+.sparkle-container {
+  position: absolute;
+  top: 11px;
+  left: 19px;
+  pointer-events: none;
+  z-index: 10;
+}
+.sparkle-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color);
+  animation: sparkle-burst 500ms ease-out forwards;
+  animation-delay: var(--delay);
+  opacity: 0;
+}
+@keyframes sparkle-burst {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Confetti Overlay (big celebration) */
+.confetti-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  left: var(--x);
+  width: var(--w);
+  height: var(--h);
+  background: var(--color);
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall var(--duration) ease-in forwards;
+  animation-delay: var(--delay);
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotateZ(0deg) rotateX(0deg);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotateZ(var(--spin)) rotateX(720deg);
+    opacity: 0;
+  }
+}
+.confetti-banner {
+  position: absolute;
+  top: 30vh;
+  left: 0;
+  right: 0;
+  text-align: center;
+  animation: banner-pop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+.confetti-banner-text {
+  display: inline-block;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--green);
+  background: var(--surface);
+  padding: 12px 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+@keyframes banner-pop {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Accessibility: disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .sparkle-particle,
+  .confetti-piece,
+  .confetti-banner {
+    animation: none;
+    display: none;
   }
 }

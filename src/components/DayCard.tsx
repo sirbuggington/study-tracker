@@ -3,6 +3,7 @@ import type { DayData, ProgressState } from '../data/types';
 import { useDayStats } from '../hooks/useStats';
 import { ProgressBar } from './ProgressBar';
 import { TaskCheckbox } from './TaskCheckbox';
+import { ConfettiOverlay } from './ConfettiOverlay';
 
 interface Props {
   day: DayData;
@@ -15,7 +16,18 @@ interface Props {
 
 export function DayCard({ day, progress, onToggle, isActive, defaultExpanded = false, filter }: Props) {
   const [expanded, setExpanded] = useState(defaultExpanded);
+  const [showConfetti, setShowConfetti] = useState(false);
   const stats = useDayStats(day, progress);
+
+  const handleToggle = (taskId: string) => {
+    const isCheckingOn = !progress[taskId];
+    const wasComplete = stats.all.done === stats.all.total;
+    if (isCheckingOn && !wasComplete && stats.all.done + 1 === stats.all.total) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3500);
+    }
+    onToggle(taskId);
+  };
 
   if (day.isRestDay) {
     return (
@@ -60,6 +72,7 @@ export function DayCard({ day, progress, onToggle, isActive, defaultExpanded = f
 
   return (
     <div className={`day-card ${isActive ? 'active-day' : ''} ${dayComplete ? 'day-complete' : ''}`} id={day.id}>
+      {showConfetti && <ConfettiOverlay dayTitle={day.title} />}
       <div className="day-header" onClick={() => setExpanded(!expanded)}>
         <div className="day-header-left">
           <span className={`day-badge ${dayComplete ? 'done' : 'pending'}`}>
@@ -92,7 +105,7 @@ export function DayCard({ day, progress, onToggle, isActive, defaultExpanded = f
                   key={task.id}
                   task={task}
                   checked={!!progress[task.id]}
-                  onToggle={onToggle}
+                  onToggle={handleToggle}
                   type="must"
                 />
               ))}
@@ -110,7 +123,7 @@ export function DayCard({ day, progress, onToggle, isActive, defaultExpanded = f
                   key={task.id}
                   task={task}
                   checked={!!progress[task.id]}
-                  onToggle={onToggle}
+                  onToggle={handleToggle}
                   type="nice"
                 />
               ))}
