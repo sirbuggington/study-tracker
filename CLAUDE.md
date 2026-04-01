@@ -2,7 +2,7 @@
 
 ## What This Project Is
 
-A 3-week intensive study plan and companion tracker app for preparing for a junior Application Developer interview at Hamilton County IT. The target stack is C#, SQL Server, ASP.NET, Blazor, and Visual Studio.
+A 3-week intensive study plan and companion tracker app for preparing for a junior Application Developer interview at Hamilton County IT. The target stack is C#, VB.NET, SQL Server, ASP.NET, Blazor, and Visual Studio.
 
 **Live site:** https://dabugtracker.netlify.app/
 
@@ -12,8 +12,9 @@ A 3-week intensive study plan and companion tracker app for preparing for a juni
 - **Week 1 (Days 1-5):** Foundation — C# basics, T-SQL, ASP.NET Core, Blazor
 - **Week 2 (Days 7-12):** Build the project (WorkOrderTracker) + fill gaps — full CRUD, OOP, EF Core, debugging, Git
 - **Week 3 (Days 14-19):** Polish and interview prep
+- **Week 4 (Day 20):** Free certifications and skill badges
 - Sundays are rest days
-- Start date: March 31, 2026 | Target completion: April 18, 2026
+- Start date: March 31, 2026 | Target completion: April 20, 2026
 
 The end goal is a working Blazor Server CRUD app backed by EF Core and SQL Server, pushed to GitHub, that can be demoed in an interview.
 
@@ -22,7 +23,7 @@ The end goal is a working Blazor Server CRUD app backed by EF Core and SQL Serve
 Many conversations in this project will be the user asking questions about the study material — not just about the tracker app. You should:
 
 - **Know the entire syllabus front to back** — read `Study_Plan_Final.md` and `src/data/studyPlan.ts` to understand every day's topics, tasks, and goals
-- **Answer questions about C#, SQL Server, ASP.NET Core, Blazor, EF Core, OOP, Git, Visual Studio, and debugging** — all topics covered in the plan
+- **Answer questions about C#, VB.NET, SQL Server, ASP.NET Core, Blazor, EF Core, OOP, Git, Visual Studio, and debugging** — all topics covered in the plan
 - **Quiz the user on demand** — the user will come back after each study day and ask to be quizzed on that day's material. Follow the quizzing rules below exactly.
 - **Review the user's notes and code** — they may share screenshots or text of their notes and ask you to check for mistakes, like a study partner would
 - **Explain things simply** — the user is learning, so avoid jargon-heavy explanations unless they ask for depth
