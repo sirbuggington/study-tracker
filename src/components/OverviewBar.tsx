@@ -82,7 +82,11 @@ export function OverviewBar({ plan, progress }: Props) {
         <span className="hours-detail">{formatHours(stats.hours.done)} of {formatHours(stats.hours.total)} completed</span>
       </div>
       {paceMessage && <div className="pace-message">{paceMessage}</div>}
-      <ProgressBar pct={stats.must.pct} />
+      <ProgressBar
+        pct={stats.all.total ? (stats.all.done / stats.all.total) * 100 : 100}
+        size="lg"
+        label={`${stats.all.total ? ((stats.all.done / stats.all.total) * 100).toFixed(2) : '100.00'}% complete`}
+      />
     </div>
   );
 }
