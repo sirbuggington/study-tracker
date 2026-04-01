@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { StudyPlan, ProgressState } from '../data/types';
+import type { StudyPlan } from '../data/types';
 import { useOverallStats } from '../hooks/useStats';
 import { ProgressBar } from './ProgressBar';
 
@@ -18,7 +18,7 @@ function formatHours(h: number): string {
   return `${whole + 1}h`;
 }
 
-function getPaceMessage(plan: StudyPlan, progress: ProgressState, hoursCompleted: number): string | null {
+function getPaceMessage(plan: StudyPlan, hoursCompleted: number): string | null {
   const start = new Date(plan.startDate + 'T00:00:00');
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -59,7 +59,7 @@ function getPaceMessage(plan: StudyPlan, progress: ProgressState, hoursCompleted
 
 export function OverviewBar({ plan, progress }: Props) {
   const stats = useOverallStats(plan, progress);
-  const paceMessage = useMemo(() => getPaceMessage(plan, progress, stats.hours.done), [plan, progress, stats.hours.done]);
+  const paceMessage = useMemo(() => getPaceMessage(plan, stats.hours.done), [plan, stats.hours.done]);
 
   return (
     <div className="overview-bar">
