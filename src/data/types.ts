@@ -4,6 +4,7 @@ export interface TaskItem {
   subItems?: string[];
   link?: string;
   hours: number;
+  detail?: string;
 }
 
 export interface DayData {

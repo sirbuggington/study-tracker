@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { TaskItem } from '../data/types';
 
 interface Props {
@@ -16,26 +17,46 @@ function formatHours(h: number): string {
 }
 
 export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
+  const [showDetail, setShowDetail] = useState(false);
+
   return (
-    <label className={`task-item ${checked ? 'task-done' : ''} task-${type}`}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={() => onToggle(task.id)}
-      />
-      <span className="task-check" />
-      <span className="task-text">
-        {task.text}
-        {task.link && (
-          <>
-            {' '}
-            <a href={task.link} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
-              Link
-            </a>
-          </>
+    <div className={`task-wrapper ${checked ? 'task-done' : ''} task-${type}`}>
+      <label className="task-item">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => onToggle(task.id)}
+        />
+        <span className="task-check" />
+        <span className="task-text">
+          {task.text}
+          {task.link && (
+            <>
+              {' '}
+              <a href={task.link} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+                Link
+              </a>
+            </>
+          )}
+        </span>
+        <span className="task-hours">{formatHours(task.hours)}</span>
+        {task.detail && (
+          <button
+            className="task-detail-btn"
+            onClick={e => { e.preventDefault(); e.stopPropagation(); setShowDetail(!showDetail); }}
+            aria-label="View details"
+          >
+            {showDetail ? 'Less' : 'More'}
+          </button>
         )}
-      </span>
-      <span className="task-hours">{formatHours(task.hours)}</span>
-    </label>
+      </label>
+      {showDetail && task.detail && (
+        <div className="task-detail">
+          {task.detail.split('\n').map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
