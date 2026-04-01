@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { StudyPlan } from '../data/types';
+import type { StudyPlan, ProgressState } from '../data/types';
 import { useOverallStats } from '../hooks/useStats';
 import { ProgressBar } from './ProgressBar';
 
