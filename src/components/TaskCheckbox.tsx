@@ -34,12 +34,7 @@ export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
   return (
     <div className={`task-wrapper ${checked ? 'task-done' : ''} task-${type} ${task.isQuiz ? 'task-quiz' : ''}`}>
       {showSparkles && <SparklesBurst />}
-      <label className="task-item">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleToggle}
-        />
+      <div className="task-item" onClick={handleToggle} role="checkbox" aria-checked={checked} tabIndex={0} onKeyDown={e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); handleToggle(); } }}>
         <span className="task-check" />
         <span className="task-text">
           {task.text}
@@ -56,13 +51,13 @@ export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
         {task.detail && (
           <button
             className="task-detail-btn"
-            onClick={e => { e.preventDefault(); e.stopPropagation(); setShowDetail(!showDetail); }}
+            onClick={e => { e.stopPropagation(); setShowDetail(!showDetail); }}
             aria-label="View details"
           >
             {showDetail ? 'Less' : 'More'}
           </button>
         )}
-      </label>
+      </div>
       {showDetail && task.detail && (
         <div className="task-detail">
           {task.detail.split('\n').map((line, i) => (
