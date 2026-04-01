@@ -20,10 +20,13 @@ function ensureSwitchElement(): HTMLLabelElement {
 
 export function triggerHaptic(): void {
   if (navigator.vibrate) {
-    // Android / Chrome — Vibration API
-    navigator.vibrate(10);
+    // Android / Chrome — burst pattern: vibrate-pause-vibrate for a stronger thump
+    navigator.vibrate([30, 10, 30]);
   } else {
-    // iOS 18+ — proxy click through label to fire Taptic Engine
-    ensureSwitchElement().click();
+    // iOS 18+ — rapid-fire the switch to stack multiple haptic taps
+    const label = ensureSwitchElement();
+    label.click();
+    setTimeout(() => label.click(), 15);
+    setTimeout(() => label.click(), 30);
   }
 }
