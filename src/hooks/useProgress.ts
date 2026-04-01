@@ -1,9 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { ProgressState } from '../data/types';
 
 const STORAGE_KEY = 'hamilton-study-tracker-progress';
+const API_URL = '/api/progress';
 
-function loadProgress(): ProgressState {
+function loadLocal(): ProgressState {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : {};
@@ -12,16 +13,53 @@ function loadProgress(): ProgressState {
   }
 }
 
-function saveProgress(state: ProgressState) {
+function saveLocal(state: ProgressState) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch {
-    // localStorage may be unavailable (private browsing, storage full)
+    // localStorage may be unavailable
   }
 }
 
+async function fetchRemote(): Promise<ProgressState | null> {
+  try {
+    const res = await fetch(API_URL);
+    if (res.ok) return await res.json();
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function saveRemote(state: ProgressState) {
+  try {
+    await fetch(API_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state),
+    });
+  } catch {
+    // API unavailable — localStorage still has the data
+  }
+}
+
+function save(state: ProgressState) {
+  saveLocal(state);
+  saveRemote(state);
+}
+
 export function useProgress() {
-  const [progress, setProgress] = useState<ProgressState>(loadProgress);
+  const [progress, setProgress] = useState<ProgressState>(loadLocal);
+
+  // On mount, fetch from API and use it as source of truth
+  useEffect(() => {
+    fetchRemote().then(remote => {
+      if (remote !== null) {
+        setProgress(remote);
+        saveLocal(remote);
+      }
+    });
+  }, []);
 
   const toggle = useCallback((taskId: string) => {
     setProgress(prev => {
@@ -31,7 +69,7 @@ export function useProgress() {
       } else {
         next[taskId] = true;
       }
-      saveProgress(next);
+      save(next);
       return next;
     });
   }, []);
@@ -42,7 +80,7 @@ export function useProgress() {
 
   const resetAll = useCallback(() => {
     const empty = {};
-    saveProgress(empty);
+    save(empty);
     setProgress(empty);
   }, []);
 
@@ -54,7 +92,7 @@ export function useProgress() {
     try {
       const parsed = JSON.parse(json);
       if (typeof parsed === 'object' && parsed !== null) {
-        saveProgress(parsed);
+        save(parsed);
         setProgress(parsed);
         return true;
       }
