@@ -7,6 +7,14 @@ interface Props {
   type: 'must' | 'nice';
 }
 
+function formatHours(h: number): string {
+  if (h < 1) return `${Math.round(h * 60)}m`;
+  const whole = Math.floor(h);
+  const frac = h - whole;
+  if (frac === 0) return `${whole}h`;
+  return `${whole}h ${Math.round(frac * 60)}m`;
+}
+
 export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
   return (
     <label className={`task-item ${checked ? 'task-done' : ''} task-${type}`}>
@@ -27,6 +35,7 @@ export function TaskCheckbox({ task, checked, onToggle, type }: Props) {
           </>
         )}
       </span>
+      <span className="task-hours">{formatHours(task.hours)}</span>
     </label>
   );
 }

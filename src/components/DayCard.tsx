@@ -71,6 +71,7 @@ export function DayCard({ day, progress, onToggle, isActive, defaultExpanded = f
           </div>
         </div>
         <div className="day-header-right">
+          <span className="day-hours-badge">{stats.hours.remaining > 0 ? `${Math.round(stats.hours.remaining * 10) / 10}h left` : 'Done!'}</span>
           <span className="day-count">{stats.all.done}/{stats.all.total}</span>
           <span className="chevron">{expanded ? '\u25B2' : '\u25BC'}</span>
         </div>

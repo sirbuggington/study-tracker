@@ -121,6 +121,33 @@ body { margin: 0; }
 .must-color { color: var(--blue); }
 .nice-color { color: var(--purple); }
 
+/* Hours & Pace */
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 6px 0 4px;
+}
+.hours-remaining {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--orange);
+}
+.hours-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.pace-message {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  padding: 4px 10px;
+  background: var(--bg);
+  border-radius: 6px;
+  text-align: center;
+}
+
 /* Progress Bar */
 .progress-bar {
   width: 100%;
@@ -313,6 +340,14 @@ body { margin: 0; }
   font-weight: 600;
   color: var(--text-secondary);
 }
+.day-hours-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange);
+  background: var(--orange-light);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
 
 /* Day Body */
 .day-body {
@@ -398,6 +433,18 @@ body { margin: 0; }
   border-radius: 4px;
 }
 .task-text a:hover { text-decoration: underline; }
+.task-hours {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: center;
+}
+.task-done .task-hours { opacity: 0.4; }
 
 /* Proof */
 .proof-section {

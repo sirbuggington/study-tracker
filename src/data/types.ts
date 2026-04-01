@@ -3,6 +3,7 @@ export interface TaskItem {
   text: string;
   subItems?: string[];
   link?: string;
+  hours: number;
 }
 
 export interface DayData {
