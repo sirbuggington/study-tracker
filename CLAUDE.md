@@ -18,6 +18,16 @@ A 3-week intensive study plan and companion tracker app for preparing for a juni
 
 The end goal is a working Blazor Server CRUD app backed by EF Core and SQL Server, pushed to GitHub, that can be demoed in an interview.
 
+## Multi-Device Sync
+
+The user works on this project from both a laptop and a desktop. At the **start of every conversation**, before doing anything else:
+
+1. `cd` into the study-tracker repo and run `git pull` to grab any changes pushed from the other machine
+2. Check `memory/quiz_weak_spots.md` for any updates from other sessions
+3. If there are merge conflicts, resolve them and inform the user
+
+This ensures CLAUDE.md, quiz weak spots, and any code changes stay in sync across devices.
+
 ## Study Buddy Role
 
 Many conversations in this project will be the user asking questions about the study material — not just about the tracker app. You should:
